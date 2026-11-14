@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>getolymp</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EAF1FF;--ink:#061A5C;--mut:#6577A8;--bl:#1E5BFF;--bl2:#0B3BD8;--gold:#FFC93C;--ok:#12B76A;--er:#F04438;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font:600 15px/1.45 Manrope,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+#app{max-width:560px;margin:0 auto;padding:16px 16px calc(110px + env(safe-area-inset-bottom,0px))}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.08}
+h2{font-size:20px;font-weight:800;margin:26px 2px 12px;letter-spacing:-.02em}
+b{font-weight:800}p{margin-top:6px}
+.mut{color:var(--mut);font-size:13px;font-weight:600}
+.card{background:#fff;border-radius:28px;padding:18px;margin-bottom:12px;box-shadow:0 8px 24px rgba(30,91,255,.08)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:16px}.top>div{flex:1}
+.lv{background:var(--ink);color:#fff;border-radius:99px;padding:6px 12px;font-size:13px;font-weight:800}
+.hero{background:linear-gradient(155deg,#4C94FF 0%,#0B3BD8 65%,#061A5C 100%);color:#fff;border-radius:36px;padding:24px;position:relative;overflow:hidden;margin-bottom:14px}
+.hero:before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 82% 8%,rgba(255,255,255,.08) 0 7deg,transparent 7deg 14deg)}
+.hero>*{position:relative}.hero .mut{color:rgba(255,255,255,.78)}
+.hero .mas{position:absolute;right:6px;top:6px;width:132px;height:132px}
+.big{font-size:76px;font-weight:800;letter-spacing:-.05em;line-height:.95}
+.mas{width:52px;height:52px}
+.btn{border:0;border-radius:99px;padding:14px 22px;font:800 15px Manrope,sans-serif;background:var(--bl);color:#fff;cursor:pointer;box-shadow:0 6px 16px rgba(30,91,255,.3)}
+.btn.w{background:#fff;color:var(--bl2);box-shadow:none}.btn.g{background:#DCE7FF;color:var(--bl2);box-shadow:none}
+.btn:disabled{opacity:.4}
+.lnk{background:none;border:0;color:var(--bl);font:800 14px Manrope,sans-serif;padding:4px 0 12px;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.tile{background:#fff;border:0;border-radius:28px;padding:16px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;font:800 16px Manrope,sans-serif;color:var(--ink);box-shadow:0 8px 24px rgba(30,91,255,.08)}
+.tile span{font-size:13px;color:var(--mut);font-weight:600}.tile.hot{background:var(--bl);color:#fff}.tile.hot span{color:#D5E2FF}
+.i3{width:58px;height:58px;flex:none;filter:drop-shadow(0 6px 8px rgba(11,59,216,.25))}
+.hd{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.bar{height:10px;border-radius:9px;background:#DCE7FF;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#4C94FF,#1E5BFF)}
+.hero .bar{background:rgba(255,255,255,.25)}.hero .bar i{background:#fff}
+.chip{font-size:12px;font-weight:800;padding:5px 11px;border-radius:99px;background:#EEF2FF;color:var(--mut);white-space:nowrap}
+.c1{background:#E0EBFF;color:var(--bl2)}.c2{background:#FFF1D6;color:#B26B00}.c3{background:#DDF7EA;color:#0A8F54}
+.cd{display:flex;gap:20px;margin-top:6px}.cd b{display:block;font-size:34px;line-height:1}.cd span{font-size:12px;opacity:.75}
+.opt{display:block;width:100%;text-align:left;border:2px solid transparent;background:#fff;border-radius:22px;padding:16px;margin-top:10px;font:700 15px Manrope,sans-serif;color:var(--ink);cursor:pointer}
+.opt.ok{background:#DDF7EA;border-color:var(--ok)}.opt.er{background:#FEE4E2;border-color:var(--er)}
+.okc{color:var(--ok)}.erc{color:var(--er)}
+.fc{background:#fff;border-radius:34px;min-height:260px;display:flex;align-items:center;justify-content:center;text-align:center;padding:26px;font-size:22px;font-weight:800;margin:14px 0;cursor:pointer;box-shadow:0 12px 30px rgba(30,91,255,.12);animation:fl .3s}
+.fc.back{background:var(--bl);color:#fff}
+@keyframes fl{from{transform:rotateY(80deg);opacity:.4}to{transform:none;opacity:1}}
+.sw{width:26px;height:26px;accent-color:var(--bl)}
+nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));background:var(--ink);border-radius:30px;display:flex;padding:6px;box-shadow:0 12px 30px rgba(6,26,92,.35);z-index:5}
+nav button{flex:1;background:none;border:0;border-radius:24px;padding:9px 0 7px;font:700 10.5px Manrope,sans-serif;color:#8FA5E6;cursor:pointer}
+nav button.on{background:#fff;color:var(--bl2)}
+nav svg{display:block;margin:0 auto 3px;width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sh{position:fixed;inset:0;background:rgba(6,26,92,.45);display:flex;align-items:flex-end;z-index:9}
+.sh form{background:#fff;width:100%;max-width:560px;margin:0 auto;border-radius:32px 32px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom,0px));max-height:90%;overflow:auto}
+label{display:block;font-size:12px;color:var(--mut);margin:14px 0 5px}
+input:not(.sw),select,textarea{width:100%;background:#EEF3FF;border:0;border-radius:16px;padding:13px;font:600 16px Manrope,sans-serif;color:var(--ink)}
+textarea{min-height:120px}.row2{display:flex;gap:10px;margin-top:18px}
+.empty{text-align:center;color:var(--mut);padding:24px}
+</style></head><body>
+<div id="app"></div><nav id="nav"></nav>
+<script>
+const DAY=864e5,IV=[1,3,7,14],$=s=>document.querySelector(s),STN=['Не начато','В процессе','Повторить','Освоено'];
+const D={read:{},st:{},m:{},cp:{},uc:[],xp:0,keys:{},days:{},ev:'',evn:'Заключительный этап',att:[]};
+let S;try{S=Object.assign({},D,JSON.parse(localStorage.getItem('gol2')||'{}'))}catch(e){S={...D}}
+const save=()=>{try{localStorage.setItem('gol2',JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>new Date().toISOString().slice(0,10),act=()=>{S.days[today()]=1},xp=(k,n)=>{if(!S.keys[k]){S.keys[k]=1;S.xp+=n}};
+const sh=a=>a.slice().sort(()=>Math.random()-.5);
+// ---- Кодификатор: «Высшая проба», финансовая грамотность (olymp.hse.ru, перечень тем 9–11 кл.)
+const TH=[['1','Личные сбережения и семейный бюджет','save',[
+['1.1','Банки и банковская система','Основные представления о банках, банковская система России, коммерческий банк, Центральный банк, банковская карта'],
+['1.2','Виды вкладов и их условия','Банковский вклад, вкладчик, вклад до востребования, срочный вклад, виды срочных вкладов, схема выбора вклада, система страхования вкладов'],
+['1.3','Ставки по вкладам','Доход и доходность вклада, простой и сложный процент, капитализация, процентная ставка, номинальная, реальная и эффективная ставка; инфляция (11 кл.)'],
+['1.4','Расчёт доходности вкладов','Задачи на простые и сложные проценты, сравнение абсолютных и относительных величин']]],
+['2','Кредитование','credit',[
+['2.1','Кредиты и как ими пользоваться','Кредит, кредитор, заёмщик, ставка, полная стоимость кредита, кредитный договор, залог, целевой и нецелевой кредит, потребительский, автокредит, образовательный, кредитная карта; аннуитетный и дифференцированный платёж, ответственность за долг (11 кл.)'],
+['2.2','Ипотека: плюсы и минусы','Ипотечный кредит, первоначальный взнос, платёжеспособность заёмщика, сравнение предложений; оценка выплат за месяц, год и весь срок (11 кл.)']]],
+['3','Инвестирование','invest',[
+['3.1','Ценные бумаги','Ценные бумаги, эмиссия, виды, акция (обыкновенная и привилегированная), облигация'],
+['3.2','Фондовый рынок','Фондовый рынок, биржа, эмитент, инвесторы, профессиональные участники, первичный и вторичный рынок, портфельные и прямые инвестиции'],
+['3.3','Доходность ценных бумаг','Номинальная цена, доходность к погашению, доходность акций, дивиденды, прирост курсовой стоимости, текущая доходность, доходность облигаций, риск и доход'],
+['3.4','Инвестиционный портфель','Инвестиционный портфель, диверсификация, виды портфелей, степень риска портфелей']]],
+['4','Страхование и пенсии','insure',[
+['4.1','Как работает страхование','Страховщик, страхователь, застрахованный, страховая компания, полис, страховая сумма, возмещение, обязательное и добровольное страхование, договор, выплата, премия'],
+['4.2','Выбор страховой защиты','Виды страхования, выбор страховщика, финансовая устойчивость, франшиза; выгодоприобретатель, допустимый риск, личное, медицинское и имущественное страхование, страхование ответственности (11 кл.)'],
+['4.3','Пенсионная система','Пенсия, пенсионная система РФ, страховая и накопительная пенсия, страховой стаж, индивидуальный пенсионный коэффициент, пенсионные накопления, НПФ, способы увеличить пенсию']]],
+['5','Риски и финансовая безопасность','lock',[
+['5.1','Финансовые риски и стратегии','Финансовый риск, виды рисков, портфельный и рыночный риск, низко- и высокорисковые активы, декларация о рисках, консервативная, агрессивная и смешанная стратегии'],
+['5.2','Управление инвестиционными рисками','Инвестиционный риск, принципы инвестирования с учётом рисков; хеджирование, дериватив, аутсорсинг (11 кл.)'],
+['5.3','Мошенничество и пирамиды','Финансовое мошенничество, направления деятельности мошенников, финансовая пирамида, правила выбора финансовой компании, меры предосторожности, снижение рисков']]],
+['6','Собственный бизнес и налоги','biz',[
+['6.1','Создание бизнеса','Стартап, его плюсы и минусы, порядок создания, бизнес-план, источники финансирования, организации поддержки стартапов'],
+['6.2','Налоги','Налоговая система РФ, виды налогов, налогоплательщик, объект, база, ставка, налоговый и отчётный период, льготы, сумма налога, вычеты, пени; штрафные санкции (11 кл.)']]]];
+const subs=TH.flatMap(t=>t[3].map(s=>({id:s[0],t:s[1],terms:s[2],th:t[0]}))),sb=id=>subs.find(s=>s.id==id);
+const QS=[
+['1.1','Какая организация выполняет в России роль Центрального банка?',['Сбербанк','Банк России','Агентство по страхованию вкладов','Минфин'],1,'Центральный банк РФ — Банк России. Он регулирует банковскую систему.'],
+['1.1','Чем коммерческий банк отличается от Центрального?',['Выпускает наличные рубли','Работает с клиентами ради прибыли','Устанавливает ключевую ставку','Не принимает вклады'],1,'Коммерческие банки обслуживают клиентов и зарабатывают; эмиссия и ключевая ставка — функции Банка России.'],
+['1.2','Какой вклад можно забрать в любой момент, но ставка по нему обычно ниже?',['Срочный','До востребования','Депозит с капитализацией','Такого нет'],1,'Вклад до востребования гибок, но доходность ниже срочного.'],
+['1.2','Что делает система страхования вкладов?',['Гарантирует доходность','Возвращает вклад в пределах лимита при отзыве лицензии банка','Защищает от инфляции','Выдаёт кредиты банкам'],1,'Выплачивается сумма вклада с процентами, но не больше установленного лимита.'],
+['1.3','Начисление процентов на ранее начисленные проценты — это…',['Простой процент','Капитализация (сложный процент)','Индексация','Дисконтирование'],1,'При капитализации проценты присоединяются к сумме вклада.'],
+['1.3','Реальная ставка приблизительно равна…',['номинальной плюс инфляция','номинальной минус инфляция','номинальной умножить на инфляцию','инфляции минус номинальная'],1,'Реальная доходность учитывает потерю покупательной способности.'],
+['1.4','Вклад 100 000 ₽ под 10% годовых с годовой капитализацией. Сумма через 2 года?',['120 000 ₽','121 000 ₽','110 000 ₽','122 000 ₽'],1,'100 000 × 1,1² = 121 000 ₽.'],
+['1.4','Тот же вклад по простым процентам через 2 года?',['120 000 ₽','121 000 ₽','110 000 ₽','200 000 ₽'],0,'100 000 × (1 + 0,1 × 2) = 120 000 ₽.'],
+['2.1','Что показывает полная стоимость кредита (ПСК)?',['Только основной долг','Все платежи заёмщика в годовом выражении, включая проценты и комиссии','Только проценты','Ключевую ставку'],1,'ПСК позволяет честно сравнивать кредитные предложения.'],
+['2.1','Как меняется платёж при дифференцированной схеме?',['Не меняется','Уменьшается к концу срока','Растёт','Хаотично'],1,'Основной долг гасится равными частями, проценты — на остаток. При аннуитете платёж одинаков.'],
+['2.2','Первоначальный взнос по ипотеке — это…',['Комиссия банка','Часть стоимости жилья, вносимая из своих средств','Страховка','Налог'],1,'Чем больше взнос, тем меньше сумма кредита и переплата.'],
+['3.1','Облигация — это…',['Доля в капитале компании','Долговая ценная бумага','Страховой полис','Вид вклада'],1,'Эмитент обязуется вернуть номинал и обычно платить купон.'],
+['3.1','Чем привилегированные акции отличаются от обыкновенных?',['Всегда дают право голоса','Дивиденд приоритетен, права голоса обычно ограничены','Не приносят дохода','Это облигации'],1,'Привилегированные акции — приоритет в дивидендах, меньше участия в управлении.'],
+['3.2','Кто такой эмитент?',['Покупатель акций','Тот, кто выпускает ценные бумаги','Брокер','Биржа'],1,'Эмитент — компания или государство, выпускающие ценные бумаги.'],
+['3.3','Из чего складывается доходность акции?',['Только из дивидендов','Из дивидендов и прироста курсовой стоимости','Только из купона','Из страховой выплаты'],1,'Доход — дивиденды плюс разница цен покупки и продажи.'],
+['3.4','Диверсификация портфеля нужна, чтобы…',['Гарантировать прибыль','Снизить риск, распределив вложения','Избежать налогов','Увеличить комиссии'],1,'Прибыль она не гарантирует, но снижает зависимость от одного актива.'],
+['4.1','Кто такой страхователь?',['Тот, кто заключает договор и платит премию','Страховая компания','Тот, кто всегда получает выплату','Регулятор'],0,'Страхователь — сторона договора, уплачивающая страховую премию.'],
+['4.1','Какое страхование обязательно для владельцев автомобилей?',['КАСКО','ОСАГО','ДМС','Страхование жизни'],1,'ОСАГО — обязательное страхование гражданской ответственности.'],
+['4.2','Франшиза в страховании — это…',['Скидка на премию','Часть убытка, которую не возмещает страховщик','Бонус за стаж','Вид налога'],1,'Франшиза удешевляет полис, но часть убытка остаётся на вас.'],
+['4.3','Какая пенсия зависит от страхового стажа и ИПК?',['Социальная','Страховая','Только накопительная','Пособие по безработице'],1,'ИПК — баллы за стаж и официальную зарплату.'],
+['5.1','Какая стратегия предполагает вложения в основном в низкорисковые активы?',['Агрессивная','Консервативная','Спекулятивная','Высокодоходная'],1,'Консервативная стратегия: сохранность важнее доходности.'],
+['5.2','Хеджирование — это…',['Покупка акций на все деньги','Защита от неблагоприятного изменения цен','Вид налога','Выпуск облигаций'],1,'Хеджирование снижает риск, например, с помощью деривативов.'],
+['5.3','Признак финансовой пирамиды?',['Лицензия и прозрачная отчётность','Обещание высокой гарантированной доходности за счёт взносов новых участников','Раскрытие рисков','Гарантия государства'],1,'Выплаты старым участникам идут из взносов новых — система рано или поздно рушится.'],
+['5.3','Что проверить перед тем, как нести деньги в финансовую компанию?',['Количество рекламы','Наличие лицензии или записи в реестре Банка России','Красоту офиса','Отзывы без источника'],1,'Реестры доступны на сайте Банка России.'],
+['6.1','Что описывает бизнес-план?',['Только налоги','Цели, рынок, расчёты затрат и доходов бизнеса','Список сотрудников','Кредитную историю'],1,'Это основа для решений и разговора с инвесторами.'],
+['6.2','Налоговая база — это…',['Сумма налога к уплате','Стоимостная или физическая характеристика объекта налогообложения','Штраф','Налоговый период'],1,'Налог = база × ставка (с учётом льгот и вычетов).'],
+['6.2','Пени начисляются…',['За раннюю уплату','За просрочку уплаты налога','За получение вычета','За регистрацию ИП'],1,'Пени — компенсация за каждый день просрочки.']];
+const CS=[['1.1','Банковская система','Двухуровневая: Банк России и коммерческие банки'],['1.2','Вклад до востребования','Можно снять в любой момент, ставка обычно низкая'],['1.2','Срочный вклад','Деньги размещены на срок, ставка выше, досрочное снятие невыгодно'],['1.3','Капитализация процентов','Присоединение начисленных процентов к сумме вклада'],['1.3','Номинальная ставка','Ставка по договору без учёта инфляции'],['1.3','Эффективная ставка','Годовая доходность с учётом капитализации'],['1.4','Сложный процент','S = P·(1 + r)ⁿ'],['2.1','ПСК','Полная стоимость кредита: все платежи заёмщика в годовом выражении'],['2.1','Аннуитетный платёж','Одинаковая сумма каждый месяц'],['2.1','Дифференцированный платёж','Убывающий: равные доли долга плюс проценты на остаток'],['2.2','Ипотека','Кредит на жильё под залог недвижимости'],['3.1','Акция','Ценная бумага: доля в капитале и право на дивиденд'],['3.1','Облигация','Долговая бумага: возврат номинала и купонный доход'],['3.2','Первичный и вторичный рынок','Первичный — размещение эмитентом, вторичный — торговля между инвесторами'],['3.3','Дивиденд','Часть прибыли компании, выплачиваемая акционерам'],['3.4','Диверсификация','Распределение вложений для снижения риска'],['4.1','Страховая премия','Плата страхователя страховщику'],['4.1','Страховое возмещение','Выплата при наступлении страхового случая'],['4.2','Франшиза','Часть убытка, остающаяся на страхователе'],['4.3','ИПК','Индивидуальный пенсионный коэффициент: баллы за стаж и зарплату'],['5.1','Консервативная стратегия','Приоритет сохранности: низкий риск и умеренный доход'],['5.2','Дериватив','Производный инструмент, цена зависит от базового актива'],['5.3','Финансовая пирамида','Выплаты прежним участникам за счёт взносов новых'],['6.1','Стартап','Молодая компания с новой идеей и высоким риском'],['6.2','Налоговый вычет','Сумма, уменьшающая налоговую базу или налог'],['6.2','Налоговая ставка','Размер налога на единицу налоговой базы']];
+// ---- Иконки
+const E='<ellipse cx="32" cy="57" rx="22" ry="4" fill="#0B3BD8" opacity=".18"/>',I=b=>`<svg class="i3" viewBox="0 0 64 64">${E}${b}</svg>`;
+const ICO={save:I('<ellipse cx="32" cy="46" rx="20" ry="8" fill="#C98108"/><ellipse cx="32" cy="41" rx="20" ry="8" fill="#FFC93C"/><ellipse cx="32" cy="32" rx="20" ry="8" fill="#C98108"/><ellipse cx="32" cy="27" rx="20" ry="8" fill="#FFD966"/><ellipse cx="32" cy="27" rx="12" ry="4" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>'),
+credit:I('<g transform="rotate(-10 32 32)"><rect x="6" y="17" width="52" height="34" rx="8" fill="#0B3BD8"/><rect x="6" y="14" width="52" height="34" rx="8" fill="#4C94FF"/><rect x="6" y="22" width="52" height="8" fill="#061A5C"/><rect x="13" y="36" width="16" height="5" rx="2.5" fill="#fff" opacity=".85"/></g>'),
+invest:I('<rect x="8" y="36" width="12" height="18" rx="3" fill="#4C94FF"/><rect x="26" y="26" width="12" height="28" rx="3" fill="#1E5BFF"/><rect x="44" y="14" width="12" height="40" rx="3" fill="#0B3BD8"/><path d="M10 28 28 16l10 6 16-14" stroke="#FFC93C" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
+insure:I('<path d="M32 5 55 13v17c0 15-10 24-23 29C19 54 9 45 9 30V13z" fill="#0B3BD8"/><path d="M32 5 55 13v17c0 15-10 24-23 29z" fill="#4C94FF"/><path d="M21 32l8 8 15-16" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
+lock:I('<path d="M22 30v-8a10 10 0 0 1 20 0v8" stroke="#061A5C" stroke-width="6" fill="none"/><rect x="12" y="29" width="40" height="27" rx="9" fill="#C98108"/><rect x="12" y="26" width="40" height="27" rx="9" fill="#FFC93C"/><circle cx="32" cy="38" r="4.5" fill="#061A5C"/><rect x="30" y="40" width="4" height="8" rx="2" fill="#061A5C"/>'),
+biz:I('<path d="M23 20v-5a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v5" stroke="#061A5C" stroke-width="5" fill="none"/><rect x="6" y="23" width="52" height="32" rx="9" fill="#D9760F"/><rect x="6" y="20" width="52" height="32" rx="9" fill="#FF9F43"/><rect x="6" y="33" width="52" height="5" fill="#fff" opacity=".35"/><rect x="28" y="30" width="8" height="11" rx="3" fill="#061A5C"/>')};
+const mascot=()=>'<svg class="mas" viewBox="0 0 120 120"><defs><radialGradient id="cg" cx=".35" cy=".3"><stop offset="0" stop-color="#FFE48A"/><stop offset="1" stop-color="#F2A81D"/></radialGradient></defs><ellipse cx="60" cy="110" rx="34" ry="7" fill="#061A5C" opacity=".2"/><circle cx="60" cy="60" r="46" fill="#C98108"/><circle cx="60" cy="54" r="46" fill="url(#cg)"/><circle cx="60" cy="54" r="37" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3"/><ellipse cx="46" cy="48" rx="5" ry="7.5" fill="#061A5C"/><ellipse cx="74" cy="48" rx="5" ry="7.5" fill="#061A5C"/><circle cx="48" cy="45" r="2" fill="#fff"/><circle cx="76" cy="45" r="2" fill="#fff"/><path d="M45 66q15 13 30 0" stroke="#061A5C" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="34" cy="62" r="5" fill="#FF8A6B" opacity=".55"/><circle cx="86" cy="62" r="5" fill="#FF8A6B" opacity=".55"/></svg>';
+// ---- Логика
+function st(id){const x=S.st[id]||{a:0,c:0},k=x.a?x.c/x.a:0;if(x.a>=4&&k>=.8&&S.read[id])return 3;if(x.a>=2&&k<.6)return 2;return S.read[id]||x.a?1:0}
+const cardsAll=()=>CS.map((c,i)=>({id:'b'+i,s:c[0],f:c[1],b:c[2]})).concat(S.uc),cpr=id=>S.cp[id]||{box:0,next:0},due=c=>cpr(c.id).next<=Date.now();
+const dueM=()=>Object.keys(S.m).filter(k=>S.m[k].next<=Date.now()),inDeck=(c,d)=>!d||c.s==d||c.s.startsWith(d+'.');
+const streak=()=>{let n=0,d=Date.now();if(!S.days[today()])d-=DAY;while(S.days[new Date(d).toISOString().slice(0,10)]){n++;d-=DAY}return n};
+let V={t:'h'},Z=null,F=null;
+const go=(t,x={})=>{V={t,...x};Z=null;F=null;render();scrollTo(0,0)};
+function form(t,f,cb){const d=document.createElement('div');d.className='sh';d.innerHTML=`<form><h2 style="margin:0">${t}</h2>${f.map(x=>`<label>${x.l}</label>`+(x.t=='area'?`<textarea id="f${x.k}"></textarea>`:x.t=='select'?`<select id="f${x.k}">${x.o.map(o=>`<option value="${o[0]}">${esc(o[1])}</option>`).join('')}</select>`:`<input id="f${x.k}" type="${x.t||'text'}">`)).join('')}<div class="row2"><button class="btn" style="flex:1">Сохранить</button><button type="button" class="btn g" id="cx">Отмена</button></div></form>`;document.body.append(d);d.querySelector('#cx').onclick=()=>d.remove();d.onclick=e=>{if(e.target==d)d.remove()};d.querySelector('form').onsubmit=e=>{e.preventDefault();const r={};f.forEach(x=>r[x.k]=d.querySelector('#f'+x.k).value);if(cb(r)!==false){d.remove();save();render()}}}
+function tick(){document.querySelectorAll('[data-at]').forEach(e=>{const s=Math.floor((new Date(e.dataset.at)-Date.now())/1e3);e.innerHTML=s>0?[['дн',Math.floor(s/86400)],['ч',Math.floor(s%86400/3600)],['мин',Math.floor(s%3600/60)],['с',s%60]].map(x=>`<div><b>${String(x[1]).padStart(2,'0')}</b><span>${x[0]}</span></div>`).join(''):'Этап начался'})}
+setInterval(tick,1000);
+function setEv(){form('Дата этапа',[{k:'n',l:'Название (дату берите на olymp.hse.ru)'},{k:'d',l:'Дата и время',t:'datetime-local'}],r=>{S.evn=r.n||'Этап';S.ev=r.d?new Date(r.d).toISOString():''})}
+// ---- Главная
+function vHome(){const m=subs.filter(s=>st(s.id)==3).length,p=Math.round(m/subs.length*100),weak=subs.filter(s=>st(s.id)==2),dm=dueM().length,dc=cardsAll().filter(due).length,n=S.ev&&new Date(S.ev)>Date.now()?S.ev:'';
+return `<div class="top">${mascot()}<div><div class="mut">${new Date().toLocaleDateString('ru',{weekday:'long',day:'numeric',month:'long'})}</div><h1>Привет!</h1></div><span class="lv">Ур. ${Math.floor(S.xp/100)+1}</span></div>
+<div class="hero">${mascot()}<div class="mut">Кодификатор освоен</div><div class="big">${p}<span style="font-size:34px">%</span></div><div class="bar" style="margin:16px 0 10px;width:62%"><i style="width:${p}%"></i></div><div class="mut">${m} из ${subs.length} тем · ${S.xp} XP · серия ${streak()} дн.</div><div style="margin-top:18px">${n?`<div class="mut">${esc(S.evn)}</div><div class="cd" data-at="${n}"></div>`:'<button class="btn w" onclick="setEv()">Указать дату этапа</button>'}</div></div>
+<div class="grid"><button class="tile hot" onclick="startQ()">${ICO.invest}<b>Микс-тест</b><span>10 вопросов</span></button><button class="tile" onclick="startQ('err')">${ICO.insure}<b>Ошибки</b><span>${dm} к повтору</span></button></div>
+<button class="tile" style="width:100%;flex-direction:row;align-items:center;gap:14px;margin-bottom:12px" onclick="go('c')">${ICO.save}<div><b>Карточки</b><br><span>${dc} к проверке</span></div></button>
+<h2>Что подтянуть</h2>${weak.length?weak.slice(0,4).map(s=>`<div class="card row" onclick="go('t',{sub:'${s.id}'})"><b>${s.id} ${esc(s.t)}</b><span class="chip c2">Повторить</span></div>`).join(''):'<div class="card empty">Слабые темы появятся после тестов</div>'}
+<h2>Разделы</h2><div class="grid">${TH.map(t=>{const k=t[3].filter(s=>st(s[0])==3).length;return `<div class="tile" onclick="go('t',{th:'${t[0]}'})">${ICO[t[2]]}<b style="font-size:14px">${esc(t[1])}</b><div class="bar" style="margin:6px 0 2px"><i style="width:${k/t[3].length*100}%"></i></div><span>${k}/${t[3].length}</span></div>`}).join('')}</div>`}
+// ---- Темы
+const SRC=[['Перечень тем, 10 класс','https://olymp.hse.ru/mirror/pubs/share/926162134.pdf'],['Перечень тем, 11 класс','https://olymp.hse.ru/mirror/pubs/share/926162140.pdf'],['Перечень тем, 9 класс','https://olymp.hse.ru/mirror/pubs/share/926160034.pdf'],['Материалы и демо-варианты','https://olymp.hse.ru/mmo/materials-finance'],['Пособие 2026/27','https://olymp.hse.ru/mirror/pubs/share/1198453758.pdf'],['fincult.info','https://fincult.info']];
+function vTopics(){
+if(V.sub){const s=sb(V.sub),x=S.st[s.id]||{a:0,c:0},k=st(s.id);return `<button class="lnk" onclick="go('t',{th:'${s.th}'})">‹ Назад</button><h1>${s.id} ${esc(s.t)}</h1><div style="margin:12px 0"><span class="chip c${k}">${STN[k]}</span></div><div class="card"><div class="mut">Понятия из перечня тем</div><p>${esc(s.terms)}</p></div><div class="card row" style="cursor:default"><div><b>Теорию изучил</b><div class="mut">Для статуса «Освоено» нужны и тесты (≥4 ответа, ≥80%)</div></div><input type="checkbox" class="sw" ${S.read[s.id]?'checked':''} onchange="S.read['${s.id}']=this.checked;act();save();render()"></div><div class="card"><div class="mut">Результаты тестов</div><b>${x.a?x.c+' из '+x.a+' верно ('+Math.round(x.c/x.a*100)+'%)':'Тестов по теме ещё не было'}</b></div><div class="grid"><button class="btn" onclick="startQ('${s.id}')">Тест по теме</button><button class="btn g" onclick="go('c',{deck:'${s.id}'})">Карточки</button></div>`}
+if(V.th){const t=TH.find(x=>x[0]==V.th);return `<button class="lnk" onclick="go('t')">‹ Все разделы</button><div class="hd">${ICO[t[2]]}<h1>${esc(t[1])}</h1></div>`+t[3].map(s=>{const k=st(s[0]);return `<div class="card row" onclick="go('t',{sub:'${s[0]}'})"><b>${s[0]} ${esc(s[1])}</b><span class="chip c${k}">${STN[k]}</span></div>`}).join('')+`<div class="grid"><button class="btn" onclick="startQ('${t[0]}')">Тест по разделу</button><button class="btn g" onclick="go('c',{deck:'${t[0]}'})">Карточки</button></div>`}
+return `<h1>Кодификатор</h1><div class="mut" style="margin:6px 0 16px">Высшая проба · Финансовая грамотность</div>`+TH.map(t=>{const L=t[3],m=L.filter(s=>st(s[0])==3).length;return `<div class="card row" onclick="go('t',{th:'${t[0]}'})">${ICO[t[2]]}<div style="flex:1"><b>${t[0]}. ${esc(t[1])}</b><div class="bar" style="margin:8px 0 4px"><i style="width:${m/L.length*100}%"></i></div><div class="mut">${m} из ${L.length} освоено</div></div></div>`}).join('')+`<h2>Источники</h2><div class="card">${SRC.map(s=>`<a href="${s[1]}" target="_blank" rel="noopener" style="color:var(--bl);display:block;padding:4px 0">${s[0]}</a>`).join('')}<div class="mut" style="margin-top:10px">Структура разделов общая для 9–11 классов. Пункты с пометкой «11 кл.» есть только в перечне 11 класса. Проверяйте актуальные перечни на olymp.hse.ru.</div></div>`}
+// ---- Тесты
+function startQ(m){let ids=QS.map((q,i)=>i);if(m=='err')ids=dueM().map(Number);else if(m)ids=ids.filter(i=>QS[i][0]==m||QS[i][0].startsWith(m+'.'));if(!ids.length){alert(m=='err'?'Нет ошибок к повторению':'Нет вопросов');return}V.t='q';F=null;Z={q:sh(ids).slice(0,10),i:0,sel:null,res:[],t:Date.now()};render()}
+function pick(j){if(Z.sel!=null)return;const qi=Z.q[Z.i],q=QS[qi],ok=j==q[3],x=S.st[q[0]]=S.st[q[0]]||{a:0,c:0};x.a++;if(ok)x.c++;Z.sel=j;Z.res.push(ok);
+if(!ok)S.m[qi]={step:0,next:Date.now()+DAY,fails:((S.m[qi]||{}).fails||0)+1};else if(S.m[qi]){const m=S.m[qi];m.step++;if(m.step>3)delete S.m[qi];else m.next=Date.now()+IV[m.step]*DAY}act();save();render()}
+function nextQ(){Z.i++;Z.sel=null;if(Z.i>=Z.q.length){Z.done=1;const c=Z.res.filter(Boolean).length;S.att.push({at:Date.now(),n:Z.q.length,c,s:Math.round((Date.now()-Z.t)/1e3)});xp('a'+Date.now(),10)}save();render()}
+function vTests(){
+if(Z&&Z.done){const c=Z.res.filter(Boolean).length;return `<div class="hero">${mascot()}<div class="mut">Результат</div><div class="big">${Math.round(c/Z.q.length*100)}<span style="font-size:34px">%</span></div><div class="mut">${c} из ${Z.q.length} · ${Math.round((Date.now()-Z.t)/1e3)} с · +10 XP</div></div><h2>Разбор ошибок</h2>`+(Z.q.map((qi,i)=>Z.res[i]?'':`<div class="card"><b>${esc(QS[qi][1])}</b><p class="okc">Верно: ${esc(QS[qi][2][QS[qi][3]])}</p><p class="mut">${esc(QS[qi][4])}</p></div>`).join('')||'<div class="card empty">Ошибок нет — отлично!</div>')+`<button class="btn" style="width:100%" onclick="go('q')">Готово</button>`}
+if(Z){const q=QS[Z.q[Z.i]],a=Z.sel;return `<div class="mut">Вопрос ${Z.i+1} из ${Z.q.length} · тема ${q[0]}</div><div class="bar" style="margin-top:8px"><i style="width:${Z.i/Z.q.length*100}%"></i></div><h2 style="font-size:23px;margin:18px 2px 6px">${esc(q[1])}</h2>`+q[2].map((o,j)=>`<button class="opt ${a==null?'':j==q[3]?'ok':j==a?'er':''}" onclick="pick(${j})">${esc(o)}</button>`).join('')+(a!=null?`<div class="card" style="margin-top:14px"><b class="${a==q[3]?'okc':'erc'}">${a==q[3]?'Верно!':'Неверно'}</b><p>${esc(q[4])}</p></div><button class="btn" style="width:100%" onclick="nextQ()">${Z.i+1<Z.q.length?'Дальше':'Завершить'}</button>`:'')+`<div style="margin-top:14px"><button class="lnk" onclick="go('q')">Выйти</button></div>`}
+return `<h1>Тесты</h1><div class="mut" style="margin:6px 0 16px">Готовые вопросы по кодификатору с разбором. Всего: ${QS.length}</div><div class="grid"><button class="tile hot" onclick="startQ()">${ICO.invest}<b>Микс</b><span>10 вопросов</span></button><button class="tile" onclick="startQ('err')">${ICO.insure}<b>Ошибки</b><span>${dueM().length} к повтору</span></button></div><h2>По разделам</h2>`+TH.map(t=>`<div class="card row" onclick="startQ('${t[0]}')">${ICO[t[2]]}<div style="flex:1"><b>${esc(t[1])}</b><div class="mut">${QS.filter(q=>q[0].startsWith(t[0]+'.')).length} вопросов</div></div><span class="chip c1">Начать</span></div>`).join('')}
+// ---- Карточки
+function fcStart(){const q=cardsAll().filter(c=>inDeck(c,V.deck)&&due(c)).map(c=>c.id);if(!q.length)return;F={q:sh(q),i:0,flip:0,ok:0,bad:{},n:q.length};render()}
+function fcAns(k){const id=F.q[F.i],p=S.cp[id]=S.cp[id]||{box:0,next:0};if(k){if(!F.bad[id]){p.box=Math.min(p.box+1,4);F.ok++}else p.box=Math.max(p.box,1);p.next=Date.now()+[0,1,3,7,14][p.box]*DAY;xp('f'+id+today(),2)}else{p.box=0;F.bad[id]=1;F.q.push(id)}F.i++;F.flip=0;act();save();render()}
+function addCard(){form('Новая карточка',[{k:'f',l:'Термин или вопрос'},{k:'b',l:'Ответ',t:'area'},{k:'s',l:'Тема',t:'select',o:subs.map(s=>[s.id,s.id+' '+s.t])}],r=>{if(!r.f.trim()||!r.b.trim())return false;S.uc.push({id:'u'+Date.now(),s:r.s,f:r.f.trim(),b:r.b.trim()})})}
+function vCards(){
+if(F){if(F.i>=F.q.length)return `<div class="hero">${mascot()}<div class="mut">Сессия завершена</div><div class="big">${F.ok}/${F.n}</div><div class="mut">знали с первого раза</div></div><button class="btn" style="width:100%" onclick="go('c',{deck:V.deck})">Готово</button>`;const c=cardsAll().find(x=>x.id==F.q[F.i]);return `<div class="mut">Карточка ${F.i+1} из ${F.q.length}</div><div class="fc ${F.flip?'back':''}" onclick="F.flip=1;render()">${esc(F.flip?c.b:c.f)}</div>`+(F.flip?`<div class="grid"><button class="btn" onclick="fcAns(1)">Знаю</button><button class="btn g" onclick="fcAns(0)">Не знаю</button></div>`:'<div class="mut" style="text-align:center">Нажмите, чтобы увидеть ответ</div>')+`<button class="lnk" style="margin-top:14px" onclick="go('c',{deck:V.deck})">Прервать</button>`}
+const all=cardsAll(),L=all.filter(c=>inDeck(c,V.deck)),nd=L.filter(due).length;
+return `<h1>Карточки</h1><div class="hero">${mascot()}<div class="mut">К проверке${V.deck?' · тема '+V.deck:''}</div><div class="big">${nd}</div><div class="mut" style="margin-top:6px">всего ${L.length}</div><div style="margin-top:16px;display:flex;gap:10px"><button class="btn w" ${nd?'':'disabled'} onclick="fcStart()">Проверить</button><button class="btn" style="background:rgba(255,255,255,.2);box-shadow:none" onclick="addCard()">+ Карточка</button></div></div><div style="display:flex;gap:8px;overflow:auto;margin-bottom:12px"><button class="chip ${V.deck?'':'c1'}" onclick="go('c')">Все</button>${TH.map(t=>`<button class="chip ${V.deck==t[0]?'c1':''}" style="border:0" onclick="go('c',{deck:'${t[0]}'})">${t[0]}. ${esc(t[1].split(' ')[0])}</button>`).join('')}</div>`+L.map(c=>`<div class="card row" style="cursor:default"><div><b>${esc(c.f)}</b><div class="mut">${esc(c.b)}</div></div><span class="chip c${cpr(c.id).box>2?3:cpr(c.id).box?1:0}">ур. ${cpr(c.id).box}</span></div>`).join('')}
+// ---- Прогресс
+function vProg(){const A=S.att,avg=A.length?Math.round(A.reduce((a,t)=>a+t.c/t.n,0)/A.length*100):null;
+return `<h1>Прогресс</h1><div class="grid" style="margin-top:14px"><div class="card"><div class="mut">XP · уровень ${Math.floor(S.xp/100)+1}</div><div style="font-size:34px;font-weight:800">${S.xp}</div></div><div class="card"><div class="mut">Серия дней</div><div style="font-size:34px;font-weight:800">${streak()}</div></div><div class="card"><div class="mut">Тестов пройдено</div><div style="font-size:34px;font-weight:800">${A.length}</div></div><div class="card"><div class="mut">Средний результат</div><div style="font-size:34px;font-weight:800">${avg==null?'—':avg+'%'}</div></div></div><h2>Точность по разделам</h2>`+TH.map(t=>{let a=0,c=0;t[3].forEach(s=>{const x=S.st[s[0]];if(x){a+=x.a;c+=x.c}});return `<div class="card"><div class="row" style="cursor:default"><b>${esc(t[1])}</b><span class="mut">${a?Math.round(c/a*100)+'% · '+a+' отв.':'нет данных'}</span></div><div class="bar" style="margin-top:10px"><i style="width:${a?c/a*100:0}%"></i></div></div>`}).join('')+`<h2>Данные</h2><div class="grid"><button class="btn g" onclick="setEv()">Дата этапа</button><button class="btn g" onclick="form('Экспорт',[{k:'t',l:'Копия данных',t:'area'}],()=>{});$('#ft').value=JSON.stringify(S)">Экспорт</button><button class="btn g" onclick="form('Импорт',[{k:'t',l:'Вставьте копию',t:'area'}],r=>{try{S=Object.assign({},D,JSON.parse(r.t))}catch(e){alert('Неверный формат');return false}})">Импорт</button><button class="btn g" style="color:var(--er)" onclick="if(confirm('Удалить весь прогресс?')){S={...D};save();render()}">Сбросить</button></div><div class="mut" style="margin:14px 2px">Данные хранятся на этом устройстве. Индекс готовности и аналитика по неделям пока не реализованы.</div>`}
+function render(){$('#nav').innerHTML=[['h','Главная','M3 11l9-8 9 8v9H3z'],['t','Темы','M4 6h16M4 12h16M4 18h10'],['q','Тесты','M5 12l5 5L20 7'],['c','Карточки','M4 8h12v10H4zM8 5h12v10'],['p','Прогресс','M4 20V10M10 20V4M16 20v-7M22 20H2']].map(x=>`<button class="${V.t==x[0]?'on':''}" onclick="go('${x[0]}')"><svg viewBox="0 0 24 24"><path d="${x[2]}"/></svg>${x[1]}</button>`).join('');
+$('#app').innerHTML={h:vHome,t:vTopics,q:vTests,c:vCards,p:vProg}[V.t]();tick()}
+try{const s=document.createElement('script');s.src='https://telegram.org/js/telegram-web-app.js';s.onload=()=>{try{const w=Telegram.WebApp;w.ready();w.expand();w.setHeaderColor('#EAF1FF');w.setBackgroundColor('#EAF1FF')}catch(e){}};document.head.append(s)}catch(e){}
+render();
+</script></body></html>
